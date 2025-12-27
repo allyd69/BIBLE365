@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My 2026 Bible Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .progress-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .today-reading {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .today-reading h2 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .reading-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .reading-item h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .reading-item p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-complete {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-skip {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .verse-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .verse-card p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .verse-reference {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 My 2026 Bible Journey</h1>
+            <p>Drawing closer to God, one day at a time</p>
+        </div>
+
+        <div class="progress-card">
+            <h2 style="color: #667eea; margin-bottom: 10px;">Your Progress</h2>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="daysComplete">0</div>
+                    <div class="stat-label">Days Complete</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="currentStreak">0</div>
+                    <div class="stat-label">Current Streak</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="percentComplete">0%</div>
+                    <div class="stat-label">Complete</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="verse-card">
+            <p id="verseText">"For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future."</p>
+            <div class="verse-reference" id="verseRef">Jeremiah 29:11</div>
+        </div>
+
+        <div class="today-reading">
+            <h2>Today's Reading - Day <span id="currentDay">1</span></h2>
+            <div id="readingContent"></div>
+            <div class="button-group">
+                <button class="btn-complete" onclick="completeReading()">✓ Mark Complete</button>
+                <button class="btn-skip" onclick="skipDay()">Skip Today</button>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="previousDay()">← Previous</button>
+                <button class="nav-btn" onclick="nextDay()">Next →</button>
+                <button class="nav-btn" onclick="resetProgress()">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const readingPlan = [
+            {day: 1, date: "Jan 1", nt: "Matthew 1", psalm: "Psalm 1"},
+            {day: 2, date: "Jan 2", nt: "Matthew 2", psalm: "Psalm 2"},
+            {day: 3, date: "Jan 3", nt: "Matthew 3", psalm: "Psalm 3"},
+            {day: 4, date: "Jan 4", nt: "Matthew 4", psalm: "Psalm 4"},
+            {day: 5, date: "Jan 5", nt: "Matthew 5", psalm: "Psalm 5"},
+            {day: 6, date: "Jan 6", nt: "Matthew 6", psalm: "Psalm 6"},
+            {day: 7, date: "Jan 7", nt: "Matthew 7", psalm: "Psalm 8"},
+            {day: 8, date: "Jan 8", nt: "Matthew 8", psalm: "Psalm 9"},
+            {day: 9, date: "Jan 9", nt: "Matthew 9", psalm: "Psalm 10"},
+            {day: 10, date: "Jan 10", nt: "Matthew 10", psalm: "Psalm 11"},
+            // Add more days as needed - this is a sample
+            {day: 11, date: "Jan 11", nt: "Matthew 11", psalm: "Psalm 13"},
+            {day: 12, date: "Jan 12", nt: "Matthew 12", psalm: "Psalm 14"},
+            {day: 13, date: "Jan 13", nt: "Matthew 13", psalm: "Psalm 15"},
+            {day: 14, date: "Jan 14", nt: "Matthew 14", psalm: "Psalm 16"},
+            {day: 15, date: "Jan 15", nt: "Matthew 15", psalm: "Psalm 17"}
+        ];
+
+        const verses = [
+            {text: "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!", ref: "2 Corinthians 5:17"},
+            {text: "I can do all this through him who gives me strength.", ref: "Philippians 4:13"},
+            {text: "The Lord is close to the brokenhearted and saves those who are crushed in spirit.", ref: "Psalm 34:18"},
+            {text: "So if the Son sets you free, you will be free indeed.", ref: "John 8:36"},
+            {text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.", ref: "Jeremiah 29:11"},
+            {text: "Come to me, all you who are weary and burdened, and I will give you rest.", ref: "Matthew 11:28"}
+        ];
+
+        let currentDayIndex = 0;
+        let completedDays = {};
+        let streakCount = 0;
+
+        function loadProgress() {
+            const saved = localStorage.getItem('bibleProgress');
+            if (saved) {
+                const data = JSON.parse(saved);
+                completedDays = data.completed || {};
+                currentDayIndex = data.currentDay || 0;
+                streakCount = data.streak || 0;
+            }
+            updateDisplay();
+        }
+
+        function saveProgress() {
+            localStorage.setItem('bibleProgress', JSON.stringify({
+                completed: completedDays,
+                currentDay: currentDayIndex,
+                streak: streakCount
+            }));
+        }
+
+        function updateDisplay() {
+            const totalDays = 365;
+            const completed = Object.keys(completedDays).filter(k => completedDays[k]).length;
+            const percent = Math.round((completed / totalDays) * 100);
+
+            document.getElementById('daysComplete').textContent = completed;
+            document.getElementById('currentStreak').textContent = streakCount;
+            document.getElementById('percentComplete').textContent = percent + '%';
+            document.getElementById('progressBar').style.width = percent + '%';
+
+            displayCurrentReading();
+            displayRandomVerse();
+        }
+
+        function displayCurrentReading() {
+            if (currentDayIndex >= readingPlan.length) {
+                currentDayIndex = readingPlan.length - 1;
+            }
+            
+            const reading = readingPlan[currentDayIndex];
+            document.getElementById('currentDay').textContent = reading.day;
+            
+            const isCompleted = completedDays[reading.day];
+            const completedClass = isCompleted ? 'completed' : '';
+            
+            document.getElementById('readingContent').innerHTML = `
+                <div class="reading-item ${completedClass}">
+                    <h3>${reading.date}</h3>
+                    <p><strong>New Testament:</strong> ${reading.nt}</p>
+                    <p><strong>Psalm/Proverb:</strong> ${reading.psalm}</p>
+                </div>
+            `;
+        }
+
+        function displayRandomVerse() {
+            const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+            document.getElementById('verseText').textContent = `"${randomVerse.text}"`;
+            document.getElementById('verseRef').textContent = randomVerse.ref;
+        }
+
+        function completeReading() {
+            const reading = readingPlan[currentDayIndex];
+            completedDays[reading.day] = true;
+            streakCount++;
+            
+            if (currentDayIndex < readingPlan.length - 1) {
+                currentDayIndex++;
+            }
+            
+            saveProgress();
+            updateDisplay();
+        }
+
+        function skipDay() {
+            if (currentDayIndex < readingPlan.length - 1) {
+                currentDayIndex++;
+                streakCount = 0;
+                saveProgress();
+                updateDisplay();
+            }
+        }
+
+        function nextDay() {
+            if (currentDayIndex < readingPlan.length - 1) {
+                currentDayIndex++;
+                saveProgress();
+                updateDisplay();
+            }
+        }
+
+        function previousDay() {
+            if (currentDayIndex > 0) {
+                currentDayIndex--;
+                saveProgress();
+                updateDisplay();
+            }
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                completedDays = {};
+                currentDayIndex = 0;
+                streakCount = 0;
+                saveProgress();
+                updateDisplay();
+            }
+        }
+
+        loadProgress();
+    </script>
+</body>
+</html>
